@@ -5,9 +5,17 @@ interface Props {
   title?: string;
   width?: number | string;
   height?: number | string;
+  inline?: boolean;
 }
 
-const { src, alt = "", title, width, height } = Astro.props;
+const { src, alt = "", title, width, height, inline = false } = Astro.props;
+const w = typeof width === "number" ? `${width}px` : width;
+// ponytail: inline style beats the .prose-image-button width:100%/display:block stylesheet rule.
+const style = inline
+  ? `display: inline-block; vertical-align: middle; width: ${w ?? "1.2em"}; margin: 0 0.2em`
+  : w
+    ? `max-width: ${w}`
+    : undefined;
 ---
 
 <button
@@ -15,6 +23,7 @@ const { src, alt = "", title, width, height } = Astro.props;
   class="prose-image-button"
   data-lightbox-src={src}
   aria-label={alt ? `View full image: ${alt}` : "View full image"}
+  style={style}
 >
   <img src={src} alt={alt} title={title} width={width} height={height} loading="lazy" decoding="async" />
 </button>

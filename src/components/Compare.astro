@@ -1,0 +1,118 @@
+---
+interface Props {
+  left: string;
+  right: string;
+  leftAlt?: string;
+  rightAlt?: string;
+}
+const { left, right, leftAlt = "", rightAlt = "" } = Astro.props;
+---
+
+<div class="compare" style="--pos:50%">
+  <img class="compare-base" src={right} alt={rightAlt} loading="lazy" decoding="async" />
+  <div class="compare-top">
+    <img src={left} alt={leftAlt} loading="lazy" decoding="async" />
+  </div>
+  <div class="compare-divider" aria-hidden="true">
+    <span class="compare-handle">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 7l-5 5 5 5M15 7l5 5-5 5" />
+      </svg>
+    </span>
+  </div>
+  <input
+    class="compare-range"
+    type="range"
+    min="0"
+    max="100"
+    value="50"
+    aria-label="Reveal slider: drag to compare the two images"
+  />
+</div>
+
+<style>
+  /* ponytail: assumes both images share an aspect ratio; object-fit:cover hides minor mismatch */
+  .compare {
+    position: relative;
+    margin: 1.1em 0;
+    border: 1px solid rgba(25, 31, 29, 0.24);
+    border-radius: 2px;
+    overflow: hidden;
+    line-height: 0;
+    background: rgba(241, 244, 232, 0.54);
+    touch-action: none;
+  }
+
+  .compare-base {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .compare-top {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+  }
+
+  .compare-top img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .compare-divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--pos);
+    width: 2px;
+    transform: translateX(-1px);
+    background: var(--accent);
+    pointer-events: none;
+  }
+
+  .compare-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    background: var(--paper, #fff);
+    color: var(--accent);
+  }
+
+  .compare-handle svg {
+    display: block;
+  }
+
+  .compare-range {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: ew-resize;
+  }
+
+  .compare:has(.compare-range:focus-visible) .compare-handle {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+</style>
+
+<script>
+  for (const el of document.querySelectorAll<HTMLElement>(".compare")) {
+    const range = el.querySelector<HTMLInputElement>(".compare-range");
+    if (!range) continue;
+    const set = () => el.style.setProperty("--pos", range.value + "%");
+    range.addEventListener("input", set);
+    set();
+  }
+</script>
