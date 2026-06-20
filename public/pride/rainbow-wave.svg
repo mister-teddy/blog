@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1440" viewBox="0 0 720 1440" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <pattern id="r" width="180" height="360" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <!-- The tile seam falls in the MIDDLE of red (red backing fills the tile,
+           red is also re-drawn at the bottom), so all six wavy boundaries are
+           interior — none touch the tile edge, so none get clipped to a straight
+           line. Each colour is a shingle painted over the one below: overlaps,
+           never abuts, so no anti-aliased seam lines either. No overflow needed. -->
+      <rect x="-1" y="-1" width="182" height="362" fill="#e40303"/>
+      <path d="M0,30 Q45,-2 90,30 Q135,62 180,30 L180,360 L0,360 Z" fill="#ff8c00"/>
+      <path d="M0,90 Q45,58 90,90 Q135,122 180,90 L180,360 L0,360 Z" fill="#ffed00"/>
+      <path d="M0,150 Q45,118 90,150 Q135,182 180,150 L180,360 L0,360 Z" fill="#008026"/>
+      <path d="M0,210 Q45,178 90,210 Q135,242 180,210 L180,360 L0,360 Z" fill="#004dff"/>
+      <path d="M0,270 Q45,238 90,270 Q135,302 180,270 L180,360 L0,360 Z" fill="#750787"/>
+      <path d="M0,330 Q45,298 90,330 Q135,362 180,330 L180,360 L0,360 Z" fill="#e40303"/>
+    </pattern>
+  </defs>
+  <rect width="720" height="1440" fill="url(#r)"/>
+</svg>

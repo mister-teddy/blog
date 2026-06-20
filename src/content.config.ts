@@ -15,6 +15,7 @@ const blog = defineCollection({
     lang: language,
     slug,
     tags: z.array(z.string()).default([]),
+    theme: z.enum(["hanh-chinh", "so-thich", "pride"]).default("so-thich"),
     draft: z.boolean().default(false),
   }),
 });

@@ -10,6 +10,8 @@ import {
 
 const posts = await getPublishedPosts();
 const translations = await getPublishedTranslations();
+// Site chrome outside any post follows the newest post's theme.
+const siteTheme = posts[0]?.data.theme ?? "so-thich";
 const languageOrder = Object.keys(LANGUAGE_UI_LABELS) as LanguageCode[];
 const translationsByPost = translations.reduce((grouped, translation) => {
   const postTranslations = grouped.get(translation.data.translationOf) ?? [];
@@ -24,7 +26,7 @@ function postLanguageUrl(slug: string, lang: LanguageCode, defaultLang: Language
 }
 ---
 
-<BaseLayout description={SITE_DESCRIPTION}>
+<BaseLayout description={SITE_DESCRIPTION} theme={siteTheme}>
   <section class="intro">
     <p class="eyebrow">Mister Teddy</p>
     <h1>Blog</h1>
