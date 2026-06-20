@@ -1,0 +1,5 @@
+# esbuild/sharp ship prebuilt binaries; approve their build scripts so
+# `pnpm install` doesn't error on ignored builds (pnpm 10.18 + 11).
+onlyBuiltDependencies:
+  - esbuild
+  - sharp

@@ -3,14 +3,14 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(scriptDir, "..", "..");
+const repoRoot = path.resolve(scriptDir, "..");
 const hooksDir = path.join(repoRoot, ".git", "hooks");
 const hookPath = path.join(hooksDir, "pre-push");
 const begin = "# BEGIN blog translation check";
 const end = "# END blog translation check";
 const block = `${begin}
 if command -v pnpm >/dev/null 2>&1; then
-  pnpm --dir blog translations:check
+  pnpm translations:check
 else
   echo "pnpm is required to run blog translation checks." >&2
   exit 1
